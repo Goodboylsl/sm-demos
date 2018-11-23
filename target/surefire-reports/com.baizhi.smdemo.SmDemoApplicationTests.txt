@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.baizhi.smdemo.SmDemoApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.496 sec - in com.baizhi.smdemo.SmDemoApplicationTests

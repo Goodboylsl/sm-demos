@@ -1,0 +1,33 @@
+#定义端口号以及项目名,作为客户端url的访问地址,定义jsp的热部署,可以不用重启项目,刷新jsp
+server:
+  context-path: /ss
+  jsp-servlet:
+    init-parameters:
+      development: true
+  port: 8802
+#可以理解为在spring工厂里面创建数据源
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/baizhi
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+#理解为springmvc的视图解析器
+  mvc:
+    view:
+      prefix: /
+      suffix: .jsp
+#文件上传的单次传输大小以及一次请求之内文件传输的大小
+  http:
+    multipart:
+      max-file-size: 10Mb
+      max-request-size: 100Mb
+    encoding:
+      charset: utf-8
+      force: true
+
+mybatis:
+  type-aliases-package: com.baizhi.entity
+  mapper-locations: com/baizhi/dao/*Mapper.xml
+

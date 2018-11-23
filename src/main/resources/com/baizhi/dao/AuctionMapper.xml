@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace的值是dao接口的全限定名 -->
+<mapper namespace="com.baizhi.dao.AuctionDao">
+
+
+<!-- 如果用resultMap，你的别名还是要跟你的映射文件中的column一样 -->
+ 
+ 
+ <select id="selectAll" resultType="com.baizhi.entity.Auction">
+    select * from auction
+    <where>
+        <if test="auction_name != null and auction_name != ''">
+               auction_name like '%'||#{auction_name}||'%'
+        </if>
+        <if test="auction_desc != null and auction_desc != ''">
+               auction_desc like '%'||#{auction_desc}||'%'
+        </if>
+        <if test="auction_start_price != null and auction_start_price != ''">
+               auction_start_price = #{auction_start_price}
+        </if>
+        <if test="auction_start_time != null and auction_start_time != ''">
+              auction_start_time <![CDATA[ >= ]]> #{auction_start_time}
+        </if>
+        <if test="auction_end_time != null and auction_end_time != ''">
+              auction_end_time <![CDATA[ >= ]]> #{auction_end_time}
+        </if>
+    </where>
+ </select>
+ 
+ <select id="selectOne" resultType="com.baizhi.entity.Auction">
+    select * from auction where auction_id=#{auction_id}
+ </select>
+
+	<update id="update">
+		update auction set
+		auction_name=#{auction_name},auction_start_price=#{auction_start_price},auction_upset=#{auction_upset},
+		auction_start_time =#{auction_start_time},auction_end_time=#{auction_end_time},
+		auction_pic=#{auction_pic},
+		auction_desc=#{auction_desc} where auction_id=#{auction_id}
+	</update>
+	
+<delete id="delete">
+    delete from auction where auction_id = #{aucton_id}
+</delete>
+
+<insert id="insert">
+    insert into auction values(0,#{auction_name},#{auction_start_price},#{auction_upset},#{auction_start_time},#{auction_end_time},#{auction_pic},#{auction_desc})
+</insert>
+</mapper>
+

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace的值是dao接口的全限定名 -->
+<mapper namespace="com.baizhi.dao.RecordDao">
+
+ <!-- <resultMap type="com.baizhi.spring.entity.Record" id="result">
+    <id  column="id" property="id"/>
+    <result column="user_id" property="user_id"/>
+    <result column="auction_id" property="auction_id"/>
+    <result column="auction_time" property="auction_time"/>
+    <result column="auction_price" property="auction_price"/>
+    <collection property="list" ofType="com.baizhi.spring.entity.User">
+       <id column="user_id" property="user_id"/>
+       <result column="user_name" property="user_name"/>
+    </collection>
+ </resultMap>
+ -->
+<!-- 如果用resultMap，你的别名还是要跟你的映射文件中的column一样 -->
+
+<insert id="insert">
+    insert into auction_record values(0,#{user_id},#{auction_id},sysdate(),#{auction_price})
+</insert>
+
+<select id="selectOne" resultType="com.baizhi.entity.Record">
+	select * from(
+	select e.*,rownum r from(
+	select a.* from auction_record a order by auction_price desc)e
+	)
+	where r=1
+</select>
+
+
+<delete id="delete">
+	delete from(
+	select ar.id,ar.user_id,ar.auction_id
+	aid,ar.auction_time,ar.auction_price,a.*
+	from auction_record ar
+	left join auction a
+	on ar.auction_id = a.auction_id
+	where ar.auction_id = #{auction_id}
+	) au where au.auction_id =#{auction_id}
+</delete>
+
+<select id="selectAll" resultType="com.baizhi.entity.RecordDTO">
+	select r.auction_time
+	buytime,r.auction_price price,u.user_name name
+	from auction_record r,auction_user u
+	where r.user_id = u.user_id and r.auction_id = #{id}
+	order by r.auction_price desc
+</select>
+
+</mapper>
+

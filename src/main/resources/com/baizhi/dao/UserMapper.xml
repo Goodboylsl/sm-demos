@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace的值是dao接口的全限定名 -->
+<mapper namespace="com.baizhi.dao.UserDao">
+
+
+<!-- 如果用resultMap，你的别名还是要跟你的映射文件中的column一样 -->
+ 
+ <select id="selectTwo" resultType="com.baizhi.entity.User">
+   select * from auction_user where user_name=#{username} and user_password=#{password}
+ </select>
+
+   
+<insert id="insert">
+  insert into auction_user
+		values(0,#{user_name},#{user_password},#{user_card_no},#{user_tel},#{user_address},#{user_post_number},0,#{user_question},#{user_answer})
+</insert>
+
+</mapper>
+
